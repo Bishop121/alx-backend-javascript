@@ -1,15 +1,11 @@
-export default function getNeighborhoodsList() {
-	  this.sanFranciscoNeighborhoods = ['SOMA', 'Union Square'];
+export default function taskBlock(trueOrFalse) {
+  const task = false; /* eslint-disable-line no-unused-vars */
+  const task2 = true; /* eslint-disable-line no-unused-vars */
 
-	  this.addNeighborhood = (newNeighborhood) => {
-		      this.sanFranciscoNeighborhoods.push(newNeighborhood);
-		      return this.sanFranciscoNeighborhoods;
-		    };
-}export default function getNeighborhoodsList() {
-	  this.sanFranciscoNeighborhoods = ['SOMA', 'Union Square'];
+  if (trueOrFalse) {
+    const task = true; /* eslint-disable-line no-unused-vars */
+    const task2 = false; /* eslint-disable-line no-unused-vars */
+  }
 
-	  this.addNeighborhood = (newNeighborhood) => {
-		      this.sanFranciscoNeighborhoods.push(newNeighborhood);
-		      return this.sanFranciscoNeighborhoods;
-		    };
+  return [task, task2];
 }
