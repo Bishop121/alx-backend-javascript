@@ -1,6 +1,6 @@
-//Return  a promise using this prototype function getResponseFromAPI()
+/* eslint-disable no-unused-vars */
 export default function getResponseFromAPI() {
-	  return new Promise((resolve) => {
-		      resolve('Promse resolved');
-		    });
+  return new Promise((resolve, reject) => {
+    resolve();
+  });
 }
