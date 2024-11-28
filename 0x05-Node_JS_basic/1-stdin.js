@@ -1,13 +1,25 @@
-process.stdout.write('Welcome to Holberton School, what is your name?\n');
+// Display the welcome message
+console.log("Welcome to Holberton School, what is your name?");
 
-// Listen for user input
-process.stdin.on('data', (data) => {
-  const name = data.toString().trim(); // Convert buffer to string and trim whitespace
-  process.stdout.write(`Your name is: ${name}\n`);
-  process.exit();
+// Variable to track if user provided input
+let nameProvided = false;
+
+// Read input from standard input
+process.stdin.on("data", (data) => {
+  const name = data.toString().trim(); // Trim the input to remove excess whitespace
+  if (name) {
+    console.log(`Your name is: ${name}`); // Display the user's name
+    nameProvided = true; // Mark that a name was provided
+  } else {
+    console.log("No name provided."); // Handle empty input
+  }
 });
 
-// Handle EOF (Ctrl+D or stream closure)
-process.stdin.on('end', () => {
-  process.stdout.write('This important software is now closing\n');
+// Handle EOF (stream ends without user input)
+process.stdin.on("end", () => {
+  if (!nameProvided) {
+    console.log("No name provided."); // Handle cases where EOF occurs without any input
+  }
+  console.log("This important software is now closing");
 });
+
