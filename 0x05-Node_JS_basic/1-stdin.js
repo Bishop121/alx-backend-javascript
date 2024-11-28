@@ -7,7 +7,7 @@ process.stdin.on('data', (data) => {
   process.exit();
 });
 
-// Handle process exit
-process.on('exit', () => {
-  console.log('This important software is now closing');
+// Handle EOF (Ctrl+D or stream closure)
+process.stdin.on('end', () => {
+  process.stdout.write('This important software is now closing\n');
 });
