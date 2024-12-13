@@ -1,10 +1,17 @@
 {
-  "name": "your-project-name",
+  "name": "0x06-unittests_in_js",
   "version": "1.0.0",
+  "description": "0x06. Unittests in JS",
+  "main": "index.js",
   "scripts": {
     "test": "mocha"
   },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
   "devDependencies": {
-    "mocha": "^10.8.2"
+    "chai": "^3.5.0",
+    "mocha": "^10.8.2",
+    "sinon": "^13.0.2"
   }
 }

@@ -1,33 +1,63 @@
+const fs = require('fs');
 const { createServer } = require('http');
-const countStudents = require('./3-read_file_async');
 
-const args = process.argv.slice(2);
-const DATABASE = args[0]; // process.argv[2]
-
+const dbPath = process.argv[2];
 const port = 1245;
-const hostname = 'localhost';
 
-const app = createServer(async (req, res) => {
-  res.setHeader('Content-Type', 'text/plain');
-  res.statusCode = 200;
+function countStudents(path) {
+  return new Promise((resolve, reject) => {
+    fs.readFile(path, 'utf-8', (err, data) => {
+      if (err) {
+        reject(new Error('Cannot load the database'));
+      } else {
+        const lines = data.split('\n').filter((line) => line.trim() !== '');
+        lines.shift();
+
+        let totalStudents = 0;
+        const fieldGroup = {};
+
+        for (const line of lines) {
+          const [firstname, lastname, age, field] = line.split(',');
+
+          if (firstname && lastname && age && field) {
+            if (!fieldGroup[field]) fieldGroup[field] = [];
+            fieldGroup[field].push(firstname);
+
+            totalStudents += 1;
+          }
+        }
+
+        let output = `Number of students: ${totalStudents}\n`;
+
+        for (const [field, names] of Object.entries(fieldGroup)) {
+          output += `Number of students in ${field}: ${names.length}. List: ${names.join(', ')}\n`;
+        }
+        resolve(output.trim());
+      }
+    });
+  });
+}
+
+const app = createServer((req, res) => {
+  res.writeHead(200, { 'Content-Type': 'text/plain' });
 
   const { url } = req;
-  if (url === '/') {
-    res.write('Hello Holberton School!');
-  } else if (url === '/students') {
+
+  if (url === '/') res.end('Hello Holberton School!');
+  if (url === '/students') {
     res.write('This is the list of our students\n');
-    try {
-      const students = await countStudents(DATABASE);
-      res.end(`${students.join('\n')}`);
-    } catch (error) {
-      res.end(error.message);
-    }
+    countStudents(dbPath)
+      .then((output) => {
+        res.end(output);
+      })
+      .catch((error) => {
+        res.end(`${error.message}`);
+      });
+  } else {
+    res.end('Not found');
   }
-  res.end();
 });
 
-app.listen(port, hostname, () => {
-// console.log(`server running at ${port} ${hostname}`)
-});
+app.listen(port);
 
 module.exports = app;
