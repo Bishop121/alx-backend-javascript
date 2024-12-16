@@ -1,5 +1,6 @@
-function displayMessage(message) {
-  console.log(message);
+// Executing basic javascript with Node JS
+function displayMessage(msg) {
+  console.log(msg);
 }
 
 module.exports = displayMessage;
